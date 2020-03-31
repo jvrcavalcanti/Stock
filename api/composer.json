@@ -1,0 +1,77 @@
+{
+    "name": "pendragon/framework",
+    "description": "Micro framework",
+    "license": "MIT",
+    "type": "project",
+    "keywords": [
+        "microframework",
+        "php",
+        "php framework",
+        "framework",
+        "micro-framework",
+        "pendragon"
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "process-timeout": 0
+    },
+
+    "authors": [
+        {
+            "name": "Joao Victor Rocha Cavalcanti",
+            "email": "jonnyvictor01@gmail.com"
+        }
+    ],
+    "require": {
+        "accolon/datalayer": "^2.0",
+        "accolon/migration": "^2.0",
+        "accolon/route": "^3.1",
+        "accolon/template": "^3.0",
+        "accolon/token": "^1.1",
+        "php": "^7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "./config/db.php",
+            "./config/helper.php",
+            "./config/token.php",
+            "./config/view.php",
+            "./config/util.php",
+            "./config/app.php",
+            "./config/route.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Console\\": "console/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "serve": "php -S localhost:8000 -t public",
+
+        "migrate": "Console\\Migration::migrate",
+        "migrate.rollback": "Console\\Migration::rollback",
+        "migrate.refresh": "Console\\Migration::refresh",
+
+        "make.migration": "Console\\Make::migration",
+        "make.model": "Console\\Make::model",
+        "make.controller": "Console\\Make::controller",
+        "make.middleware": "Console\\Make::middleware",
+        "make.view": "Console\\Make::view",
+        "make.component": "Console\\Make::component",
+
+        "clear.images": "Console\\Clear::images",
+
+        "test": "phpunit  --testdox tests"
+    }
+}
