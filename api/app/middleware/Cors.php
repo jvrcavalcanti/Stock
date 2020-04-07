@@ -9,12 +9,10 @@ class Cors extends MiddlewareGlobal
     public function handle(\Accolon\Route\Request $request, \Accolon\Route\Response $response): array
     {
         $response->setHeader("Access-Control-Allow-Origin", "*");
-        $response->setHeader("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-        $response->setHeader(
-            "Access-Control-Allow-Headers",
-            "Origin, X-Requested-With, Content-Type, Accept"
-        );
-
+        header("Access-Control-Allow-Origin: *", true);
+        $response->setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+        $response->setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+        
         return [
             $request,
             $response
