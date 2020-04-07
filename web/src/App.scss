@@ -1,6 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
 @import "custom";
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap');
 
 body {
     background-color: gray;
+    font-family: 'Archivo Narrow', sans-serif;
 }

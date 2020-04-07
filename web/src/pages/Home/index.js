@@ -1,34 +1,46 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-import Api from "../../services/api.js";
+import api from "../../services/api";
+import { connect } from "react-redux";
 
-const Home = () => {
-  async function handleSubmit(event) {
-    event.preventDefault();
+async function handleSubmit(event, dispatch) {
+  event.preventDefault();
 
-    const form = new FormData(event.target);
+  const form = new FormData(event.target);
 
-    const response = await Api.post("/auth/login", {
+  const res = await fetch(api.baseURL + "/auth/login", {
+    method: "POST",
+    body: JSON.stringify({
       username: form.get("user"),
       password: form.get("password")
+    })
+  })
+
+  const data = await res.json();
+
+  if(data.status === 200) {
+    dispatch({
+      type: "LOGIN",
+      token: data.token,
+      user: data.user
     });
-
-    console.log(response);
   }
+}
 
+const Home = ({ dispatch }) => {
   return (
     <main className="text-center">
       <div className="w-50 m-auto">
-        <Form className="mt-5 p-3 border border-dark rounded bg-secondary" onSubmit={handleSubmit}>
+        <Form className="mt-5 p-3 border border-dark rounded bg-secondary" onSubmit={e => handleSubmit(e, dispatch)}>
           <h2>Login</h2>
 
           <Form.Group>
-            <Form.Control type="text" placeholder="User name" name="user" />
+            <Form.Control type="text" placeholder="User name" name="user" required />
           </Form.Group>
 
           <Form.Group>
-            <Form.Control type="password" placeholder="Password" name="password" />
+            <Form.Control type="password" placeholder="Password" name="password" required />
           </Form.Group>
 
           <Button variant="danger" type="submit">
@@ -40,4 +52,10 @@ const Home = () => {
   );
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  state
+});
+
+export default connect(
+  mapStateToProps
+)(Home);
