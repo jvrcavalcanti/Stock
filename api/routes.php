@@ -12,7 +12,7 @@ $app->post("/auth/register", "AuthController.register", \App\Middleware\JsonResp
 $app->post("/auth/login", "AuthController.login", \App\Middleware\JsonResponse::class);
 
 // Product
-$app->get("/product", "ProductController.index", \App\Middleware\Auth::class);
+$app->get("/products", "ProductController.index", \App\Middleware\Auth::class);
 $app->get("/product/show", "ProductController.show", \App\Middleware\Auth::class);
 $app->post("/product/new", "ProductController.create", \App\Middleware\Auth::class);
 $app->put("/product/update", "ProductController.update", \App\Middleware\Auth::class);
