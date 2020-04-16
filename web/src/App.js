@@ -9,8 +9,10 @@ import "./App.scss";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import Home from "./pages/Home"
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Register from './pages/Register';
+import Notfound from './pages/Notfound';
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
           <Header/>
             <Switch>
               <Route path="/" exact component={Home} />
+              <Route path="/login" exact component={Login} />
               <Route path="/register" exact component={Register} />
+              <Route component={Notfound}></Route>
             </Switch>
           <Footer/>
         </BrowserRouter>

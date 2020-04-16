@@ -1,5 +1,5 @@
-// import axios from "axios";
+import axios from "axios";
 
-export default {
-  baseURL: "http://localhost:8000",
-}
+export default axios.create({
+  baseURL: "http://api.stock.com"
+})

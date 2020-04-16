@@ -1,59 +1,56 @@
-import React from "react";
-import { Form, Button } from "react-bootstrap";
-
-import api from "../../services/api";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
-async function handleSubmit(event, dispatch) {
-  event.preventDefault();
+import api from "../../services/api";
+import Product from '../../components/Product';
 
-  const form = new FormData(event.target);
+const Home = ({token}) => {
+  const [products, setProducts] = useState([]);
+  const [listed, setListed] = useState(false);
 
-  const res = await fetch(api.baseURL + "/auth/login", {
-    method: "POST",
-    body: JSON.stringify({
-      username: form.get("user"),
-      password: form.get("password")
-    })
-  })
+  async function listProducts() {
 
-  const data = await res.json();
+    const response = await api.get(`/products?token=${token}`);
 
-  if(data.status === 200) {
-    dispatch({
-      type: "LOGIN",
-      token: data.token,
-      user: data.user
-    });
+    const data = await response.data;
+    
+    if(data.status === 200) {
+      setProducts(data.products);
+    }
   }
-}
 
-const Home = ({ dispatch }) => {
+  if(token && !listed) {
+    setListed(true);
+    listProducts();
+  }
+
   return (
-    <main className="text-center">
-      <div className="w-50 m-auto">
-        <Form className="mt-5 p-3 border border-dark rounded bg-secondary" onSubmit={e => handleSubmit(e, dispatch)}>
-          <h2>Login</h2>
+    <main className="m-auto container">
 
-          <Form.Group>
-            <Form.Control type="text" placeholder="User name" name="user" required />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Control type="password" placeholder="Password" name="password" required />
-          </Form.Group>
-
-          <Button variant="danger" type="submit">
-            Sign in
-          </Button>
-        </Form>
-      </div>
+      <h1 className="text-center">List Products</h1>
+      {!token ? (
+        <div className="alert alert-danger text-center">
+          You must log in before
+        </div>
+      ) : (<ul className="list-group text-center">
+        {products.map(product => (
+            <li className="list-group-item w-75 bg-danger d-flex m-auto" key={product.id}>
+              <Product
+                id={product.id}
+                name={product.name}
+                description={product.description}
+                quantity={product.quantity}
+                type={product.type}
+              />
+            </li>
+        ))}
+      </ul>)}
     </main>
   );
-}
+};
 
 const mapStateToProps = state => ({
-  state
+  token: state.token
 });
 
 export default connect(

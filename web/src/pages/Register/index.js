@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button } from 'react-bootstrap';
+import { useHistory } from "react-router-dom";
+
 import Input from '../../components/Input';
 import api from "../../services/api";
-import { useHistory } from "react-router-dom";
+
 
 const Register = () => {
   const [validated, setValidated] = useState(false);
@@ -23,16 +25,13 @@ const Register = () => {
       alert("Password and Confirm must be equal");
     }
 
-    const res = await fetch(api.baseURL + "/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        username: formData.get("name"),
-        email: formData.get("email"),
-        password: formData.get("password")
-      })
+    const res = await api.post("/auth/register", {
+      username: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password")
     });
 
-    const data = await res.json();
+    const data = await res.data;
     
     if (data.status === 201) {
       alert("Register successful");
