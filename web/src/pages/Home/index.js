@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import api from "../../services/api";
-import Product from '../../components/Product';
+import ListProduct from '../../components/ListProduct';
 
 const Home = ({token}) => {
   const [products, setProducts] = useState([]);
@@ -32,19 +32,11 @@ const Home = ({token}) => {
         <div className="alert alert-danger text-center">
           You must log in before
         </div>
-      ) : (<ul className="list-group text-center">
-        {products.map(product => (
-            <li className="list-group-item w-75 bg-danger d-flex m-auto" key={product.id}>
-              <Product
-                id={product.id}
-                name={product.name}
-                description={product.description}
-                quantity={product.quantity}
-                type={product.type}
-              />
-            </li>
-        ))}
-      </ul>)}
+      ) : (
+          <ul className="list-group text-center">
+            <ListProduct data={products} />
+          </ul>
+      )}
     </main>
   );
 };

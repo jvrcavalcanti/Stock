@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./store";
@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from './pages/Register';
 import Notfound from './pages/Notfound';
+import RegisterProduct from './pages/RegisterProduct';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/" exact component={Home} />
               <Route path="/login" exact component={Login} />
               <Route path="/register" exact component={Register} />
+              <Route path="/product/register" exact component={RegisterProduct} />
               <Route component={Notfound}></Route>
             </Switch>
           <Footer/>

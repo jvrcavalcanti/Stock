@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
+import Icon from "../../images/icon.png";
 import "./style.scss";
 
 const Header = ({ user }) => {
@@ -11,13 +12,13 @@ const Header = ({ user }) => {
     <Navbar bg="dark" variant="dark" className="mb-5" id="header">
       <Link to="/" className="navbar-brand">
         <Navbar.Brand>
-            {/* <img
+            {<img
               alt="Logo"
-              src="/logo.svg"
+              src={Icon}
               width="30"
               height="30"
               className="d-inline-block align-top"
-            />&nbsp; */}&nbsp;
+            />}&nbsp;
             Stock
         </Navbar.Brand>
       </Link>
@@ -29,11 +30,11 @@ const Header = ({ user }) => {
       </Link>
       {user.username ? (
         <>
-          <Link className="nav-link" to="#">
-            <label className="headerlink">{`Welcome ${user.username}`}</label>
-          </Link>
           <Link className="nav-link" to="/product/register">
             <label className="headerlink">Product Register</label>
+          </Link>
+          <Link className="nav-link" to="#">
+            <label className="headerlink">{`Welcome ${user.username}`}</label>
           </Link>
         </>
       ) : (
@@ -43,4 +44,6 @@ const Header = ({ user }) => {
   );
 };
 
-export default connect(state => ({ user: state.user }))(Header);
+export default connect(
+  state => ({ user: state.user })
+)(Header);
